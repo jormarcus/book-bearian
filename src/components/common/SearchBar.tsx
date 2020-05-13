@@ -7,7 +7,7 @@ import { IBookType } from '../../types/BaseTypes';
 class SearchBar extends React.Component {
   state = {
     searchQuery: '',
-    searchResults: [],
+    searchResults: []
   };
 
   handleQueryChange = async (event) => {
@@ -23,20 +23,20 @@ class SearchBar extends React.Component {
     console.log(books);
     this.setState({
       ...this.state,
-      searchResults: books,
+      searchResults: books
     });
     return books;
   };
 
   clearSearchInput = () => {
     this.setState({
-      searchQuery: '',
+      searchQuery: ''
     });
   };
 
   render() {
     return (
-      <div>
+      <div className="header-search-container">
         <input
           placeholder="Search by author or title..."
           value={this.state.searchQuery}
