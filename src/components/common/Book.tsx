@@ -1,12 +1,17 @@
 import React from 'react';
+// import { Link } from 'react-router-dom';
 
-const Book = () => {
+const Book = (props) => {
   return (
-    <div className="book-container">
+    <div className="book">
       <div className="book-cover">
-        <figure className="book-front"></figure>
-        <figure className="book-back"></figure>
+        <img
+          src={props.volumeInfo.imageLinks.thumbnail}
+          alt={props.volumeInfo.title}
+        />
       </div>
     </div>
   );
 };
+
+export default Book;

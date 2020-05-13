@@ -1,5 +1,5 @@
 import React from 'react';
-import Carousel from '../common/Carousel';
+import BookList from '../common/BookList';
 
 interface ILandingPageState {}
 
@@ -9,7 +9,7 @@ class LandingPage extends React.Component<{}, ILandingPageState> {
   render() {
     return (
       <div className="container">
-        <Carousel />
+        <BookList />
       </div>
     );
   }
