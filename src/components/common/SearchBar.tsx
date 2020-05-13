@@ -2,60 +2,71 @@ import React from 'react';
 import { connect } from 'react-redux';
 import GoogleServices from '../../services/GoogleServices';
 import { IBookType } from '../../types/BaseTypes';
-// import { debounce } from 'lodash';
+import { setBookList } from '../../actions/bookActions';
+import { debounce } from 'lodash';
 
-class SearchBar extends React.Component {
+interface ISearchBarState {
+  query: string;
+}
+
+interface ISearchBarProps {
+  setBookList: (books: IBookType[]) => void;
+}
+
+class SearchBar extends React.Component<ISearchBarProps, ISearchBarState> {
   state = {
-    searchQuery: '',
-    searchResults: []
+    query: ''
   };
 
-  handleQueryChange = async (event) => {
-    const searchQuery = event.target.value;
-    console.log('sq', searchQuery);
-    this.searchByQuery(searchQuery);
-    // debounce(await this.searchByQuery(searchQuery), 1500);
-    this.setState({ ...this.state, searchQuery });
+  handleQueryChange = (event) => {
+    const query = event.target.value;
+    console.log('sq', query);
+    this.searchByQuery(query);
+    this.setState({ ...this.state, query });
+    this.debounced(query);
   };
 
-  searchByQuery = async (searchQuery): Promise<any> => {
-    const books: IBookType[] = await GoogleServices.getBookByQuery(searchQuery);
-    console.log(books);
-    this.setState({
-      ...this.state,
-      searchResults: books
-    });
-    return books;
+  searchByQuery = async (query: string): Promise<any> => {
+    if (query && query.length >= 3) {
+      const books: IBookType[] = await GoogleServices.getBookByQuery(query);
+      console.log(books);
+      this.props.setBookList(books);
+      return books;
+    }
   };
+
+  debounced = debounce(this.searchByQuery, 1500);
 
   clearSearchInput = () => {
     this.setState({
-      searchQuery: ''
+      ...this.state,
+      query: ''
     });
   };
+
+  renderClearSearchButton = (): JSX.Element => (
+    <span className="search-clear-input-btn" onClick={this.clearSearchInput}>
+      X
+    </span>
+  );
 
   render() {
     return (
       <div className="header-search-container">
         <input
-          placeholder="Search by author or title..."
-          value={this.state.searchQuery}
-          onChange={this.handleQueryChange}
           className="header-book-search"
+          placeholder="Search by author or title..."
+          value={this.state.query}
+          onChange={this.handleQueryChange}
         />
-        <div
-          className="search-clear-input-btn"
-          onClick={this.clearSearchInput}
-        ></div>
+        {this.state.query && this.renderClearSearchButton()}
       </div>
     );
   }
 }
 
-const mapStateToProps = (state /*, ownProps*/) => {
-  return {};
-};
+const mapDispatchToProps = (dispatch) => ({
+  setBookList: (bookList) => dispatch(setBookList(bookList))
+});
 
-const mapDispatchToProps = {};
-
-export default connect(mapStateToProps, mapDispatchToProps)(SearchBar);
+export default connect(null, mapDispatchToProps)(SearchBar);
