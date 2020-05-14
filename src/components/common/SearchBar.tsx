@@ -18,24 +18,32 @@ class SearchBar extends React.Component<ISearchBarProps, ISearchBarState> {
     query: ''
   };
 
-  handleQueryChange = (event) => {
+  handleQueryChange = async (event) => {
     const query = event.target.value;
     console.log('sq', query);
-    this.searchByQuery(query);
+    this.debouncedSearch(this.props, query);
     this.setState({ ...this.state, query });
-    this.debounced(query);
   };
 
-  searchByQuery = async (query: string): Promise<any> => {
+  searchByQuery = async (query: string) => {
     if (query && query.length >= 3) {
       const books: IBookType[] = await GoogleServices.getBookByQuery(query);
-      console.log(books);
       this.props.setBookList(books);
       return books;
     }
   };
 
-  debounced = debounce(this.searchByQuery, 1500);
+  debouncedSearch = debounce(async function (
+    props: ISearchBarProps,
+    query: string
+  ) {
+    if (query && query.length >= 3) {
+      const books: IBookType[] = await GoogleServices.getBookByQuery(query);
+      props.setBookList(books);
+      return books;
+    }
+  },
+  1000);
 
   clearSearchInput = () => {
     this.setState({
