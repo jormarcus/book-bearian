@@ -51,13 +51,14 @@
       flex: 3;
       height: 40px;
       outline: none;
+      color: white;
     }
     input:focus {
       border: 1px solid rgb(121, 75, 196);
     }
     .search-clear-input-btn {
       position: absolute;
-      color: black;
+      color: rgb(121, 75, 196);
       z-index: 2;
       right: 10px;
       top: 5px;
