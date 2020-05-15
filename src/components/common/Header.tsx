@@ -6,11 +6,20 @@ import SearchBar from './SearchBar';
 const Header = () => {
   return (
     <div className="header-container">
+      <div className="logo">
+        <Link to="/">
+          <img
+            src={require('../../bear-reading.jpg')}
+            alt="bear reading logo"
+          />
+        </Link>
+      </div>
       <div className="header-sub-container">
-        <div className="header-app-title">Book-Bearian</div>
         <nav>
           <ul className="header-list">
-            <li>Home</li>
+            <Link to="/">
+              <li>Home</li>
+            </Link>
             <Link to={'/shelf'}>
               <li>My Books</li>
             </Link>
