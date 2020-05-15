@@ -1,13 +1,13 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import Book from './Book';
+import BookCard from './BookCard';
 
 const BookList = (props) => {
   return (
     <div className="book-list-container">
       {props.books && props.books.length > 0
         ? props.books.map((book) => {
-            return <Book key={book.id} book={book} />;
+            return <BookCard key={book.id} book={book} />;
           })
         : 'There are no books'}
     </div>

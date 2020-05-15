@@ -56,6 +56,7 @@ class SearchBar extends React.Component<ISearchBarProps, ISearchBarState> {
     return (
       <div className="header-search-container">
         <input
+          type="text"
           className="header-book-search"
           placeholder="Search by author or title..."
           value={this.state.query}

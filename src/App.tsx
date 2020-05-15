@@ -2,7 +2,7 @@ import React from 'react';
 import './styles/App.scss';
 import { Router, Route, Switch } from 'react-router-dom';
 import createBrowserHistory from './history';
-import { Header, LandingPage } from './components/common';
+import { BookPage, Header, LandingPage } from './components/common';
 import { Shelf } from './components/shelves';
 
 function App() {
@@ -14,6 +14,7 @@ function App() {
           <Switch>
             <Route path="/" exact component={LandingPage} />
             <Route path="/shelf" exact component={Shelf} />
+            <Route path="/book/:bookId" exact component={BookPage} />
           </Switch>
         </div>
       </Router>

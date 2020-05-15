@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { IVolumeInfoType } from '../../types/BaseTypes';
 
-const Book = (props) => {
+const BookCard = (props) => {
   const book: IVolumeInfoType = props.book.volumeInfo;
   return (
     <div className="book-card">
@@ -31,4 +31,4 @@ const Book = (props) => {
   );
 };
 
-export default Book;
+export default BookCard;
