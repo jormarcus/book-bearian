@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import GoogleServices from '../../services/GoogleServices';
-import { IBookType } from '../../types/BaseTypes';
+import { IBookItemType, IBookSearchResponseType } from '../../types/BaseTypes';
 import { setBookList } from '../../actions/bookActions';
 import { debounce } from 'lodash';
 
@@ -10,7 +10,7 @@ interface ISearchBarState {
 }
 
 interface ISearchBarProps {
-  setBookList: (books: IBookType[]) => void;
+  setBookList: (books: IBookItemType[]) => void;
 }
 
 class SearchBar extends React.Component<ISearchBarProps, ISearchBarState> {
@@ -20,27 +20,21 @@ class SearchBar extends React.Component<ISearchBarProps, ISearchBarState> {
 
   handleQueryChange = async (event) => {
     const query = event.target.value;
-    console.log('sq', query);
     this.debouncedSearch(this.props, query);
     this.setState({ ...this.state, query });
-  };
-
-  searchByQuery = async (query: string) => {
-    if (query && query.length >= 3) {
-      const books: IBookType[] = await GoogleServices.getBookByQuery(query);
-      this.props.setBookList(books);
-      return books;
-    }
   };
 
   debouncedSearch = debounce(async function (
     props: ISearchBarProps,
     query: string
-  ) {
-    if (query && query.length >= 3) {
-      const books: IBookType[] = await GoogleServices.getBookByQuery(query);
-      props.setBookList(books);
-      return books;
+  ): Promise<void> {
+    if (query && query.trim().length >= 3) {
+      const bookResponse: IBookSearchResponseType = await GoogleServices.getBookByQuery(
+        query
+      );
+      if (bookResponse.totalItems > 0 && bookResponse.items) {
+        props.setBookList(bookResponse.items);
+      }
     }
   },
   1000);

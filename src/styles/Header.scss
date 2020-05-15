@@ -1,3 +1,5 @@
+$bookPurple: rgb(121, 75, 196);
+
 .header-container {
   display: flex;
   justify-content: space-between;
@@ -54,11 +56,11 @@
       color: white;
     }
     input:focus {
-      border: 1px solid rgb(121, 75, 196);
+      border: 1px solid $bookPurple;
     }
     .search-clear-input-btn {
       position: absolute;
-      color: rgb(121, 75, 196);
+      color: $bookPurple;
       z-index: 2;
       right: 10px;
       top: 5px;
