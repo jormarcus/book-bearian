@@ -1,16 +1,17 @@
 import React from 'react';
-// import { Link } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { IVolumeInfoType } from '../../types/BaseTypes';
 
 const Book = (props) => {
   const book: IVolumeInfoType = props.book.volumeInfo;
   return (
     <div className="book-card">
-      <div className="book-thumbnail">
+      <Link to={`/book/${props.book.id}`} className="book-thumbnail">
         <img src={book.imageLinks.thumbnail} alt={book.title} />
-      </div>
+      </Link>
       <div className="book-description">
         <div>{book.title}</div>
+        <div>by</div>
         <div>
           {book.authors
             ? book.authors.length === 1
