@@ -7,7 +7,14 @@ const Book = (props) => {
   return (
     <div className="book-card">
       <Link to={`/book/${props.book.id}`} className="book-thumbnail">
-        <img src={book.imageLinks.thumbnail} alt={book.title} />
+        <img
+          src={
+            book.imageLinks
+              ? book.imageLinks.thumbnail
+              : require('../../book-placeholder.png')
+          }
+          alt={book.title}
+        />
       </Link>
       <div className="book-description">
         <div>{book.title}</div>
